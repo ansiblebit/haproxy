@@ -1,5 +1,5 @@
 ---
-# file: primogen/tests/boxes.yml
+# file: haproxy/tests/boxes.yml
 #
 
 vagrant:
