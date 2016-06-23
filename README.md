@@ -21,7 +21,7 @@
 
 ## Requirements
 
-- ansible >= 1.9.6
+- ansible >= 2.0.0
 
 
 ## Role Variables
@@ -88,7 +88,8 @@ $ vagrant ssh trusty64.vagrant.dev
 ## Links
 
 - [haproxy][haproxy]
-
+- [ServerLab : Compiling and Running HAProxy from Source on Ubuntu 14](http://www.serverlab.ca/tutorials/linux/network-services/compiling-and-running-haproxy-from-source-on-ubuntu-14/)
+- [haproxy init script](https://gist.github.com/serainville)
 
 ## License
 
