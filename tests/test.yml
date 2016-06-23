@@ -18,6 +18,39 @@
   vars:
     debug: yes
 
+    haproxy_configuration: |
+      global
+          daemon
+          maxconn 256
+
+      defaults
+          mode http
+          timeout connect 5000ms
+          timeout client 50000ms
+          timeout server 50000ms
+
+      frontend http-in
+          bind *:80
+          default_backend servers
+
+      backend servers
+          server server1 127.0.0.1:8000 maxconn 32
+
+    haproxy_group: haproxy
+    haproxy_user: haproxy
+
+    haproxy_build_options: |
+      TARGET=linux2628 CPU=native USE_STATIC_PCRE=1 USE_OPENSSL=1 USE_ZLIB=1
+
+  pre_tasks:
+    - name: ensure haproxy user is present
+      user:
+        name="{{ haproxy_user }}"
+        comment="{{ haproxy_user }}"
+        system=yes
+      become: yes
+
+
   roles:
     - role: haproxy
 

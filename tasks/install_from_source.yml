@@ -1,0 +1,48 @@
+---
+# file: haproxy/tasks/main.yml
+#
+# tasks to build haproxy from source.
+#
+
+- name: ensure the build dependencies are present
+  apt:
+    name="{{ item }}"
+    state=present
+  become: yes
+  with_items: "{{ haproxy_build_dependencies }}"
+
+- name: download haproxy tarball
+  get_url:
+    url="{{ haproxy_download_url }}"
+    dest="{{ haproxy_dir_source }}/{{ haproxy_tarball }}"
+    owner="{{ ansible_user }}"
+    group="{{ ansible_user }}"
+    mode=0440
+    checksum="md5:{{ item.split(' ')[0] }}"
+  with_url: "{{ haproxy_download_url }}.md5"
+  become: yes
+  register: task_haproxy_download
+
+- name: unarchive haproxy tarball
+  unarchive:
+    src="{{ haproxy_dir_source }}/{{ haproxy_tarball }}"
+    dest="{{ haproxy_dir_source }}"
+    copy=no
+    owner="{{ ansible_user }}"
+    group="{{ ansible_user }}"
+  when: task_haproxy_download.changed
+  become: yes
+
+- name: prepare install
+  command: "make {{ haproxy_build_options }}"
+  args:
+    chdir: "{{ haproxy_dir_source }}/haproxy-{{ haproxy_version }}"
+  when: task_haproxy_download.changed
+
+- name: install haproxy
+  command: make install
+  args:
+    chdir: "{{ haproxy_dir_source }}/haproxy-{{ haproxy_version }}"
+  become: yes
+  when: task_haproxy_download.changed
+

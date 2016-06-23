@@ -3,3 +3,27 @@
 #
 # defaults file
 #
+
+haproxy_build_dependencies:
+  - build-essential
+  - libpcre++-dev
+  - libssl-dev
+
+haproxy_default: |
+  ENABLED=1
+
+haproxy_dir_conf: /etc/haproxy
+haproxy_dir_log: /var/log/haproxy
+haproxy_dir_pid: /var/run
+haproxy_dir_source: /usr/local/src
+haproxy_group: haproxy
+haproxy_install: source
+haproxy_user: haproxy
+haproxy_version: 1.6.5
+
+haproxy_build_options: 'TARGET=linux24 CPU=generic USE_STATIC_PCRE=1 USE_OPENSSL=1 USE_ZLIB=1'
+
+haproxy_major_version: "{{ '.'.join(haproxy_version.split('.')[0:2]) }}"
+haproxy_tarball: "haproxy-{{ haproxy_version }}.tar.gz"
+
+haproxy_download_url: "http://www.haproxy.org/download/{{ haproxy_major_version }}/src/{{ haproxy_tarball }}"

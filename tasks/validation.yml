@@ -9,5 +9,26 @@
     msg="{{ item }} is a mandatory variable"
   when: "{{ item }} is not defined"
   with_items:
-    - debug
+    - haproxy_default
+    - haproxy_dir_conf
+    - haproxy_dir_log
+    - haproxy_dir_pid
+    - haproxy_dir_source
+    - haproxy_group
+    - haproxy_install
+    - haproxy_user
+
+- name: ensure mandatory build variables are set
+  fail:
+    msg="{{ item }} is a mandatory variable"
+  when: "{{ item }} is not defined and {{ haproxy_install == 'source' }}"
+  with_items:
+    - haproxy_build_dependencies
+    - haproxy_build_options
+    - haproxy_dir_source
+    - haproxy_download_url
+    - haproxy_major_version
+    - haproxy_tarball
+    - haproxy_user
+    - haproxy_version
 

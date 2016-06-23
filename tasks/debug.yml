@@ -8,5 +8,17 @@
     var="{{ item }}"
   when: "{{ item }} is defined"
   with_items:
-    - debug
-
+    - haproxy_build_dependencies
+    - haproxy_build_options
+    - haproxy_default
+    - haproxy_dir_conf
+    - haproxy_dir_log
+    - haproxy_dir_pid
+    - haproxy_dir_source
+    - haproxy_download_url
+    - haproxy_group
+    - haproxy_install
+    - haproxy_major_version
+    - haproxy_tarball
+    - haproxy_user
+    - haproxy_version
