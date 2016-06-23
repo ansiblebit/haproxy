@@ -4,8 +4,35 @@
 # Test tasks to verify role execution.
 #
 
-- debug:
-    msg="You need to define tests here!"
-  tags:
-    - debug
-    - test
+- fail:
+    msg="haproxy_download_url has wrong value"
+  when: haproxy_download_url != "http://www.haproxy.org/download/1.6/src/haproxy-1.6.5.tar.gz"
+
+- include: install_from_source.yml
+  when: haproxy_install == 'source'
+
+- name: file(s) are present?
+  command: "test -e {{ item }}"
+  with_items:
+    - /etc/default/haproxy
+    - /etc/init.d/haproxy
+  changed_when: no
+
+- name: directory(ies) are present?
+  command: "test -d {{ item }}"
+  with_items:
+    - "{{ haproxy_dir_conf }}"
+    - "{{ haproxy_dir_log }}"
+  changed_when: no
+
+- name: service(s) are running?
+  service:
+    name="{{ item }}"
+    state=started
+  become: yes
+  with_items:
+    - haproxy
+  register: test
+  failed_when: test.changed
+  changed_when: no
+

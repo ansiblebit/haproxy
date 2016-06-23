@@ -1,0 +1,25 @@
+---
+# file: haproxy/tests/tasks/install_from_source.yml
+#
+# Test tasks to verify installation from source.
+#
+
+- name: file(s) are present?
+  command: "test -e {{ item }}"
+  with_items:
+    - "{{ haproxy_dir_source }}/{{ haproxy_tarball }}"
+  changed_when: no
+
+- name: directory(ies) are present?
+  command: "test -d {{ item }}"
+  with_items:
+    - "{{ haproxy_dir_source }}/haproxy-{{ haproxy_version }}"
+  changed_when: no
+
+- name: are package(s) installed?
+  command: "dpkg-query -W -f='${Status}\n' {{ item }}"
+  register: test
+  failed_when: test.stdout.find('install ok installed') == -1
+  with_items: "{{ haproxy_build_dependencies }}"
+  changed_when: no
+
