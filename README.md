@@ -91,18 +91,7 @@ $ vagrant ssh trusty64.vagrant.dev
 - [ServerLab : Compiling and Running HAProxy from Source on Ubuntu 14](http://www.serverlab.ca/tutorials/linux/network-services/compiling-and-running-haproxy-from-source-on-ubuntu-14/)
 - [haproxy init script](https://gist.github.com/serainville)
 
-## License
-
-[BSD][license]
-
-
-## Author Information
-
-- [steenzout][steenzout]
-
 
 [ansible]:      https://www.ansible.com         "Ansible"
-[license]:      https://github.com/ansiblebit/haproxy/blob/master/LICENSE   "BSD license"
 [haproxy]:      http://www.haproxy.org          "haproxy"
-[steenzout]:    https://github.com/steenzout/   "Pedro Salgado"
 
