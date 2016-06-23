@@ -3,3 +3,27 @@
 #
 # handlers file
 #
+
+- name: start haproxy
+  service:
+    name=haproxy
+    state=started
+  become: yes
+
+- name: stop haproxy
+  service:
+    name=haproxy
+    state=stopped
+  become: yes
+
+- name: reload haproxy
+  service:
+    name=haproxy
+    state=reloaded
+  become: yes
+
+- name: restart haproxy
+  service:
+    name=haproxy
+    state=restarted
+  become: yes
