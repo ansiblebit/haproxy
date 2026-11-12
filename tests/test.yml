@@ -3,7 +3,7 @@
 
 - name: setup python2
   hosts: "{{ vagrant_box }}"
-  gather_facts: no
+  gather_facts: false
 
   tasks:
     - raw: sudo apt-get update -qq && sudo apt-get install -qq python2.7
@@ -13,10 +13,10 @@
 
 - name: tests play
   hosts: "{{ vagrant_box }}"
-  gather_facts: yes
+  gather_facts: true
 
   vars:
-    debug: yes
+    debug: true
 
     haproxy_configuration: |
       global
@@ -48,7 +48,7 @@
         name="{{ haproxy_user }}"
         comment="{{ haproxy_user }}"
         system=yes
-      become: yes
+      become: true
 
 
   roles:

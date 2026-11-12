@@ -8,22 +8,22 @@
   service:
     name=haproxy
     state=started
-  become: yes
+  become: true
 
 - name: stop haproxy
   service:
     name=haproxy
     state=stopped
-  become: yes
+  become: true
 
 - name: reload haproxy
   service:
     name=haproxy
     state=reloaded
-  become: yes
+  become: true
 
 - name: restart haproxy
   service:
     name=haproxy
     state=restarted
-  become: yes
+  become: true
