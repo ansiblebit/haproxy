@@ -4,14 +4,14 @@
 # tasks file
 #
 
-- include: debug.yml
+- include_tasks: debug.yml
   when: debug | default(false)
   tags: debug
 
-- include: validation.yml
+- include_tasks: validation.yml
   tags: validation
 
-- include: install_from_source.yml
+- include_tasks: install_from_source.yml
   when: haproxy_install == 'source'
 
 - name: ensure haproxy directories are set
@@ -21,7 +21,7 @@
     owner="{{ haproxy_user }}"
     group="{{ haproxy_group }}"
     mode=0755
-  become: yes
+  become: true
   with_items:
     - "{{ haproxy_dir_conf }}"
     - "{{ haproxy_dir_log }}"
@@ -33,7 +33,7 @@
     owner=root
     group=root
     mode=0440
-  become: yes
+  become: true
   notify: reload haproxy
 
 - name: setup haproxy default environment
@@ -43,7 +43,7 @@
     owner=root
     group=root
     mode=0640
-  become: yes
+  become: true
 
 - name: setup haproxy init script
   template:
@@ -52,12 +52,12 @@
     owner=root
     group=root
     mode=0755
-  become: yes
+  become: true
 
 - name: ensure service is running and enabled to start on boot
   service:
     name=haproxy
     enabled=yes
     state=started
-  become: yes
+  become: true
 
